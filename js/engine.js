@@ -80,7 +80,7 @@ var Engine = (function (global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
-        checkWin();
+        player.checkWin();
     }
 
     /**
@@ -102,16 +102,6 @@ var Engine = (function (global) {
         if (collision) reset();
     }
 
-    /**
-     * Checks if the player has reached the water and therefore won
-     */
-    function checkWin() {
-        if (player.y == 0) {
-            console.log('win');
-            reset();
-        }
-    }
-
     /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
@@ -124,6 +114,8 @@ var Engine = (function (global) {
             enemy.update(dt);
         });
         player.update();
+
+        if (player.win) reset();
     }
 
     /* This function initially draws the "game level", it will then call

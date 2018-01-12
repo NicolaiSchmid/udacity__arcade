@@ -8,8 +8,9 @@
 
 // This class requires an update(), render() and
 // a handleInput() method.
-class Player {
+class Player extends Character {
     constructor() {
+        super();
         this.sprite = 'images/char-boy.png';
 
         // Create the initial position
@@ -20,22 +21,28 @@ class Player {
     }
 
     update() {
-
+        this.checkWin();
     }
 
+    /**
+     * Checks if the player has reached the water and therefore won
+     */
+    checkWin() {
+        if (this.y == 0) {
+            this.win = true;
+            console.log('win');
+        }
+    }
     reset() {
         // The absolute pixel coordinates [x, y]
         this.coordinates = [];
 
+        // Resets the win state
+        this.win = false;
+
         // The coordinates based on the 5 x 6 grid
         this.x = Math.floor(Math.random() * 4);
         this.y = 5;
-    }
-
-    render() {
-        // Coverts the x and y coordinates to pixel and renders the image to the canvas
-        this.coordinates = [this.x * 100, (this.y * 80) - 30];
-        ctx.drawImage(Resources.get(this.sprite), ...this.coordinates);
     }
 
     // Handles the keyboard inputs
@@ -68,19 +75,3 @@ class Player {
         }
     }
 }
-
-
-/**
- * @description This listens for key presses and sends the keys to the Player.handleInput() method.
- * @license This snippet was provided by udacity
- */
-document.addEventListener('keyup', function (e) {
-    var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
-    };
-
-    player.handleInput(allowedKeys[e.keyCode]);
-});

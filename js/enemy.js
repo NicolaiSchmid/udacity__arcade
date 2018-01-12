@@ -6,27 +6,27 @@
  * this software without specific prior written permission.
  */
 
-class Enemy {
+class Enemy extends Character {
     /**
      * @param {Number} lane The lane on which the enemy will be placed, random if omitted
      */
     constructor(lane = Math.floor(Math.random() * 3) + 1) {
+        super();
         this.sprite = 'images/enemy-bug.png';
 
         // Create the initial position
         this.reset(lane);
 
-        // The speed of the enemies right movement
-        this.speed = 1 + Math.random() * 3;
-
         // The width of the sprite image
-
         this.sizeX = 97;
     }
 
     reset(lane) {
         // The absolute pixel coordinates [x, y]
         this.coordinates = [];
+
+        // The speed of the enemies right movement
+        this.speed = 1 + Math.random() * 3;
 
         // The coordinates based on the 5 x 6 grid
         this.x = -1;
@@ -49,10 +49,4 @@ class Enemy {
             this.x = -1;
         }
     };
-
-    render() {
-        // Coverts the x and y coordinates to pixel and renders the image to the canvas
-        this.coordinates = [this.x * 100, (this.y * 80) - 30];
-        ctx.drawImage(Resources.get(this.sprite), ...this.coordinates);
-    }
 }
